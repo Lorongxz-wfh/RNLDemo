@@ -1,67 +1,65 @@
-import type { ChangeEvent, FC } from "react";
+import type { ChangeEvent, FC, ReactNode } from "react";
 
-interface FloatingLabelInputProps {
+interface FloatingLabelSelectProps {
   label: string;
-  type: "text" | "date" | "password";
-  name: string;
-  value?: string | any;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  newSelectClassname?: string;
+  selectClassname?: string;
   newLabelClassName?: string;
   labelClassName?: string;
-  newInputClassName?: string;
-  inputClassName?: string;
+  name?: string;
+  value?: string | any;
+  onChange?: (e: ChangeEvent<HTMLSelectElement>) => void;
   required?: boolean;
   autoFocus?: boolean;
   disabled?: boolean;
-  readOnly?: boolean;
   errors?: string[];
+  children: ReactNode;
 }
 
-const FloatingLabelInput: FC<FloatingLabelInputProps> = ({
+const FloatingLabelSelect: FC<FloatingLabelSelectProps> = ({
   label,
-  type,
+  newSelectClassname,
+  selectClassname,
+  newLabelClassName,
+  labelClassName,
   name,
   value,
   onChange,
-  newLabelClassName,
-  labelClassName,
-  newInputClassName,
-  inputClassName,
   required,
   autoFocus,
   disabled,
-  readOnly,
   errors,
+  children,
 }) => {
   return (
     <>
       <div className="relative">
-        <input
-          type={type}
-          id={name}
+        <select
           name={name}
+          id={name}
           value={value}
           onChange={onChange}
           className={`${
-            newInputClassName
-              ? newInputClassName
-              : ` block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer ${inputClassName}`
+            newSelectClassname
+              ? newSelectClassname
+              : `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none 
+              focus:outline-none focus:ring-0 focus:border-blue-600 peer ${selectClassname}`
           }`}
-          placeholder=" "
           required={required}
           autoFocus={autoFocus}
           disabled={disabled}
-          readOnly={readOnly}
-        />
+        >
+          {children}
+        </select>
 
         <label
           htmlFor={name}
-          className={`${
+          className={
             newLabelClassName
               ? newLabelClassName
               : `absolute text-sm text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 
           peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${labelClassName}`
-          }`}
+          }
         >
           {label}
           {required && <span className="text-red-600 ml-1">*</span>}
@@ -74,4 +72,4 @@ const FloatingLabelInput: FC<FloatingLabelInputProps> = ({
   );
 };
 
-export default FloatingLabelInput;
+export default FloatingLabelSelect;
