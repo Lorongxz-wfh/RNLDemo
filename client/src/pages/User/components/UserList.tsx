@@ -12,9 +12,11 @@ import Spinner from "../../../components/Spinner/Spinner";
 
 interface UserListProps {
   onAddUser: () => void;
+  onEditUser: (user: UserColumns | null) => void;
+  refreshKey: boolean
 }
 
-const UserList: FC<UserListProps> = ({ onAddUser }) => {
+const UserList: FC<UserListProps> = ({ onAddUser, onEditUser, refreshKey }) => {
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [users, setUsers] = useState<UserColumns[]>([]);
 
@@ -62,7 +64,7 @@ const UserList: FC<UserListProps> = ({ onAddUser }) => {
 
   useEffect(() => {
     handleLoadUsers();
-  }, []);
+  }, [refreshKey]);
 
   return (
     <>
@@ -86,38 +88,38 @@ const UserList: FC<UserListProps> = ({ onAddUser }) => {
               <TableRow>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 font-medium text-center"
+                  className="px-5 py-3 font-medium text-start"
                 >
                   No.
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 font-medium text-center"
+                  className="px-5 py-3 font-medium text-start"
                 >
                   Full Name
                 </TableCell>
 
                 <TableCell
                   isHeader
-                  className="px-5 py-3 font-medium text-center"
+                  className="px-5 py-3 font-medium text-start"
                 >
                   Gender
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 font-medium text-center"
+                  className="px-5 py-3 font-medium text-start"
                 >
                   Birth Date
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 font-medium text-center"
+                  className="px-5 py-3 font-medium text-start"
                 >
                   Age
                 </TableCell>
                 <TableCell
                   isHeader
-                  className="px-5 py-3 font-medium text-center"
+                  className="px-5 py-3 font-medium text-start"
                 >
                   Action
                 </TableCell>
@@ -148,21 +150,18 @@ const UserList: FC<UserListProps> = ({ onAddUser }) => {
                     <TableCell className="px-4 py-3 text-start">
                       {user.age}
                     </TableCell>
-                    <TableCell className="px-4 py-3 text-start">
+                    <TableCell className="px-4 py-3 text-center">
                       <div className="flex gap-4">
                         <button
                           type="button"
-                          className="text-green-600 hover:underline"
+                          className="text-green-600 cursor-pointer hover:underline"
+                          onClick={() => onEditUser(user)}
                         >
                           Edit
                         </button>
-                      </div>
-                    </TableCell>
-                    <TableCell className="px-4 py-3 text-center">
-                      <div className="flex text-center gap-4">
                         <button
                           type="button"
-                          className="text-red-600 hover:underline"
+                          className="text-red-600 cursor-pointer hover:underline"
                         >
                           Delete
                         </button>
