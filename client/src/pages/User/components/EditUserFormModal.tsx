@@ -4,11 +4,10 @@ import SubmitButton from "../../../components/Button/SubmitButton";
 import FloatingLabelInput from "../../../components/Input/FloatingLabelInput";
 import Modal from "../../../components/Modal";
 import FloatingLabelSelect from "../../../components/Select/FloatingLabelSelect";
-import type { UserColumns } from "../../../interfaces/UserColumns";
-import type { GenderColumns } from "../../../interfaces/GendersColumns";
-import type { UserFieldError } from "../../../interfaces/UserFieldError";
 import GenderService from "../../../services/GenderService";
 import UserService from "../../../services/UserService";
+import type { UserColumns, UserFieldError } from "../../../interfaces/UserInterface";
+import type { GenderColumns } from "../../../interfaces/GenderInterface";
 
 interface EditUserFormModalProps {
   user: UserColumns | null;
@@ -27,8 +26,8 @@ const EditUserFormModal: FC<EditUserFormModalProps> = ({
 }) => {
   const [loadingGenders, setLoadingGenders] = useState(false);
   const [genders, setGenders] = useState<GenderColumns[]>([]);
+  
   const [loadingUpdate, setLoadingUpdate] = useState(false);
-
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -121,21 +120,23 @@ const EditUserFormModal: FC<EditUserFormModalProps> = ({
   }, [isOpen]);
 
   useEffect(() => {
-    if (user) {
-      setFirstName(user.first_name);
-      setMiddleName(user.middle_name ?? "");
-      setLastName(user.last_name);
-      setSuffixName(user.suffix_name ?? "");
-      setGender(user.gender.gender_id.toString());
-      setBirthDate(user.birth_date);
-      setUsername(user.username);
-    } else {
-      console.error(
-        "Unexpected user error occured during getting user details: ",
-        user
-      );
+    if (isOpen) {   
+      if (user) {
+        setFirstName(user.first_name);
+        setMiddleName(user.middle_name ?? "");
+        setLastName(user.last_name);
+        setSuffixName(user.suffix_name ?? "");
+        setGender(user.gender.gender_id.toString());
+        setBirthDate(user.birth_date);
+        setUsername(user.username);
+      } else {
+        console.error(
+          "Unexpected user error occured during getting user details: ",
+          user
+        );
+      }
     }
-  }, [user]);
+  }, [isOpen, user]);
 
   return (
     <>
