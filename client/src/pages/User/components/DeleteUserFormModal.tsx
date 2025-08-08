@@ -1,9 +1,7 @@
 import { useEffect, useState, type FC, type FormEvent } from "react";
 import CloseButton from "../../../components/Button/CloseButton";
 import SubmitButton from "../../../components/Button/SubmitButton";
-import FloatingLabelInput from "../../../components/Input/FloatingLabelInput";
 import Modal from "../../../components/Modal";
-import FloatingLabelSelect from "../../../components/Select/FloatingLabelSelect";
 import type { UserColumns } from "../../../interfaces/UserInterface";
 import UserService from "../../../services/UserService";
 

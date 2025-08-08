@@ -4,21 +4,36 @@ import GenderMainPage from "../pages/Gender/GenderMainPage";
 import EditGenderPage from "../pages/Gender/EditGenderPage";
 import DeleteGenderPage from "../pages/Gender/DeleteGenderPage";
 import UserMainPage from "../pages/User/UserMainPage";
+import LoginPage from "../pages/Auth/LoginPage";
+import { AuthProvider } from "../context/AuthContext";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 const AppRoutes = () => {
   return (
     <>
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route path="/" element={<GenderMainPage />} />
-          <Route path="/gender/edit/:gender_id" element={<EditGenderPage />} />
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
           <Route
-            path="/gender/delete/:gender_id"
-            element={<DeleteGenderPage />}
-          />
-          <Route path="/users" element={<UserMainPage />} />
-        </Route>
-      </Routes>
+            element={
+              <ProtectedRoutes>
+                <AppLayout />
+              </ProtectedRoutes>
+            }
+          >
+            <Route path="/genders" element={<GenderMainPage />} />
+            <Route
+              path="/gender/edit/:gender_id"
+              element={<EditGenderPage />}
+            />
+            <Route
+              path="/gender/delete/:gender_id"
+              element={<DeleteGenderPage />}
+            />
+            <Route path="/users" element={<UserMainPage />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </>
   );
 };
