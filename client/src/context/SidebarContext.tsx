@@ -28,7 +28,6 @@ export const SidebarProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const toggleSidebar = () => {
     setIsOpen((prev) => !prev);
-    // setIsOpen(!isOpen)
   };
 
   return (
